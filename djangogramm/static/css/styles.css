@@ -52,3 +52,38 @@ body {
 .error {
     color: red;
 }
+
+.registration-form {
+    max-width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 0 10px 15px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.registration-form .submit-button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.registration-form .submit-button:hover {
+    background-color: #4cae4c;
+}
+
