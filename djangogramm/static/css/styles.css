@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.site-header, .site-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.main-nav {
+    background-color: #444;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.content {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+}
+
+.page-title {
+    color: #333;
+}
+
+.registration-form {
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.submit-button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #4cae4c;
+}
+
+.error {
+    color: red;
+}

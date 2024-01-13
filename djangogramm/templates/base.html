@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}DjangoGramm{% endblock %}</title>
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}">  
+  {% block stylesheet %}    
+  {% endblock %}
+</head>
+<body>
+    <header class="site-header">
+    </header>
+
+    <nav class="main-nav">
+    </nav>
+
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      This is the footer
+    </footer>
+
+    {% block javascript %}
+    {% endblock %}
+</body>
+</html>
