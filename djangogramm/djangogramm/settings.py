@@ -76,11 +76,9 @@ WSGI_APPLICATION = 'djangogramm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangogramm',
-        'USER': 'postgres',
-        'PASSWORD': 'djangogramm',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'OPTIONS': {
+            'service': 'my_service',
+        },
     }
 }
 
