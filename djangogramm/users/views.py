@@ -1,9 +1,33 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.views.decorators.http import require_GET, require_http_methods
+from django.contrib import messages
+
+from users.forms import LoginForm
 
 
+@require_http_methods(['GET', 'POST'])
 def login_view(request):
-    return "It is login page"
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'Incorrect credentials')
+    else:
+        form = LoginForm()
+
+    return render(request, 'users/login.html', {'form': form})
 
 
+@require_GET
 def home_view(request):
-    return render(request, 'users/home_unregistered.html')
+    if request.user.is_authenticated:
+        return render(request, 'users/home_registered.html')
+    else:
+        return render(request, 'users/home_unregistered.html')

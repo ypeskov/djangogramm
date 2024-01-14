@@ -62,7 +62,7 @@ body {
     background-color: white;
 }
 
-.registration-form {
+.form-container {
     max-width: 50%;
     margin: auto;
     padding: 20px;
@@ -70,9 +70,9 @@ body {
     border: 1px solid #ddd;
 }
 
-.registration-form input[type="text"],
-.registration-form input[type="email"],
-.registration-form input[type="password"] {
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="password"] {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 0 10px 15px 10px;
@@ -81,7 +81,7 @@ body {
     box-sizing: border-box;
 }
 
-.registration-form .submit-button {
+.form-container .submit-button {
     width: calc(100% - 20px);
     padding: 10px;
     margin: 10px;
@@ -92,36 +92,36 @@ body {
     cursor: pointer;
 }
 
-.registration-form .submit-button:hover {
-background-color: #4cae4c;
+.form-container .submit-button:hover {
+    background-color: #4cae4c;
 }
 
 .messages {
-max-width: 50%;
-margin: auto;
-padding: 20px;
+    max-width: 50%;
+    margin: auto;
+    padding: 20px;
 }
 
 .messages div {
-padding: 5px 10px;
-border: 1px solid #ddd;
-border-radius: 4px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .error {
-color: red;
-background-color: #ffecec;
+    color: red;
+    background-color: #ffecec;
 }
 
 .errorlist li {
-color: red;
+    color: red;
 }
 
 .site-footer {
-background-color: #333;
-color: white;
-text-align: center;
-padding: 10px 0;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
 }
 
 .btn {
