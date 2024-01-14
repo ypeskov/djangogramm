@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.conf import settings
 
+from djangogramm.settings import env_config
 from registration.models import ActivationLink
 
 
@@ -52,9 +53,9 @@ def send_activation_email(user, link_hash):
     email = EmailMessage(
         subject,
         html_content,
-        'from@example.com',
-        ['to@example.com'],
-        reply_to=['another@example.com']
+        from_email=env_config('EMAIL_FROM'),
+        to=[user.email],
+        reply_to=[env_config('EMAIL_FROM')],
     )
-    email.content_subtype = "html"  # Установка типа содержимого на HTML
+    email.content_subtype = "html"
     email.send()

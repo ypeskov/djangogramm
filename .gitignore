@@ -6,3 +6,7 @@ dbdata/
 
 *.pyc
 *.sqlite3
+.env.dev
+.env.prod
+.env.test
+.env
