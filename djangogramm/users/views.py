@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_GET, require_http_methods
 from django.contrib import messages
+from django.urls import reverse
 
 from users.forms import LoginForm
 
@@ -23,6 +24,12 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'users/login.html', {'form': form})
+
+
+@require_GET
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('home'))
 
 
 @require_GET
