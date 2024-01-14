@@ -5,27 +5,38 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}DjangoGramm{% endblock %}</title>
-  <link rel="stylesheet" href="{% static '/css/styles.css' %}">  
-  {% block stylesheet %}    
+  <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+  {% block stylesheet %}
   {% endblock %}
 </head>
 <body>
-    <header class="site-header">
-    </header>
+<header class="site-header">
+  <div class="header-content">
+    <div class="logo"></div>
+    <h1 class="page-title">DjangoGramm</h1>
+  </div>
+</header>
 
-    <nav class="main-nav">
-    </nav>
+<nav class="main-nav">
+  <ul>
+    <li><a href="">Home</a></li>
+    <li><a href="">Profile</a></li>
+    <li><a href="">Create Post</a></li>
+    <li><a href="">Log Out</a></li>
+  </ul>
+</nav>
 
-    <main class="content">
-        {% block content %}
-        {% endblock %}
-    </main>
+<main class="content">
+  {% block content %}
+  {% endblock %}
+</main>
 
-    <footer class="site-footer">
-      This is the footer
-    </footer>
+<footer class="site-footer">
+  This is the footer
+</footer>
 
-    {% block javascript %}
-    {% endblock %}
+{% block javascript %}
+{% endblock %}
 </body>
 </html>

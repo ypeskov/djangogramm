@@ -5,11 +5,31 @@ body {
     background-color: #f4f4f4;
 }
 
-.site-header, .site-footer {
+.site-header {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: inline-block;
+    background: url('/static/images/logo.png') no-repeat center center;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    margin-right: 10px;
 }
 
 .main-nav {
@@ -19,38 +39,26 @@ body {
     text-align: center;
 }
 
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+}
+
 .content {
     margin: 20px;
     padding: 20px;
     background-color: white;
-}
-
-.page-title {
-    color: #333;
-}
-
-.registration-form {
-    margin: auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-}
-
-.submit-button {
-    background-color: #5cb85c;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submit-button:hover {
-    background-color: #4cae4c;
-}
-
-.error {
-    color: red;
 }
 
 .registration-form {
@@ -84,6 +92,33 @@ body {
 }
 
 .registration-form .submit-button:hover {
-    background-color: #4cae4c;
+background-color: #4cae4c;
 }
 
+.messages {
+max-width: 50%;
+margin: auto;
+padding: 20px;
+}
+
+.messages div {
+padding: 5px 10px;
+border: 1px solid #ddd;
+border-radius: 4px;
+}
+
+.error {
+color: red;
+background-color: #ffecec;
+}
+
+.errorlist li {
+color: red;
+}
+
+.site-footer {
+background-color: #333;
+color: white;
+text-align: center;
+padding: 10px 0;
+}
