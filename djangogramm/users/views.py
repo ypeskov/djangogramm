@@ -4,7 +4,10 @@ from django.views.decorators.http import require_GET, require_http_methods
 from django.contrib import messages
 from django.urls import reverse
 
+from icecream import ic
+
 from users.forms import LoginForm
+from users.services import authenticate_custom
 
 
 @require_http_methods(['GET', 'POST'])
@@ -14,10 +17,13 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+            user = authenticate_custom(username=username, password=password)
             if user is not None:
-                login(request, user)
-                return redirect('home')
+                if user.is_active:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'User is not active')
             else:
                 messages.error(request, 'Incorrect credentials')
     else:
