@@ -3,12 +3,12 @@ import datetime
 
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.conf import settings
+from icecream import ic
 
-from djangogramm.settings import env_config
+from djangogramm.settings import env_config, CURRENT_FULL_DOMAIN
 from registration.models import ActivationLink
 
 
@@ -47,9 +47,7 @@ def send_activation_email(user, link_hash):
     html_content = render_to_string('registration/email_template.html',
                                     {
                                         'user': user,
-                                        'activation_link': f'http://localhost:8000/activate/{link_hash}/'})
-    text_content = strip_tags(html_content)
-
+                                        'activation_link': f'{CURRENT_FULL_DOMAIN}/activate/{link_hash}/'})
     email = EmailMessage(
         subject,
         html_content,

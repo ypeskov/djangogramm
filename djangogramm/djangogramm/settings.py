@@ -141,3 +141,8 @@ EMAIL_PORT = env_config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = env_config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = env_config('EMAIL_HOST_USER', default="user@example.com")
 EMAIL_HOST_PASSWORD = env_config('EMAIL_HOST_PASSWORD', default="password")
+
+CURRENT_PROTOCOL = env_config('CURRENT_PROTOCOL', default="http")
+CURRENT_HOST = env_config('CURRENT_HOST',  default="localhost")
+CURRENT_PORT = env_config('CURRENT_PORT', default=8000, cast=int)
+CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
