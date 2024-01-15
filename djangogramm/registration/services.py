@@ -4,6 +4,7 @@ import datetime
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils import timezone
 from django.conf import settings
 from icecream import ic
@@ -44,10 +45,9 @@ def initialize_activation_email(user):
 
 def send_activation_email(user, link_hash):
     subject = "Djangogramm - Account Activation"
+    url = CURRENT_FULL_DOMAIN + reverse('activate', kwargs={'link_hash': link_hash})
     html_content = render_to_string('registration/email_template.html',
-                                    {
-                                        'user': user,
-                                        'activation_link': f'{CURRENT_FULL_DOMAIN}/activate/{link_hash}/'})
+                                    {'user': user, 'activation_link': url})
     email = EmailMessage(
         subject,
         html_content,

@@ -151,3 +151,21 @@ body {
 .btn-secondary:hover {
     background-color: #545b62;
 }
+
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar-preview {
+    margin-bottom: 10px;
+}
+
+.avatar-upload {
+    margin-bottom: 10px;
+}
+
+.avatar-errors {
+    color: red;
+    margin-top: 10px;
+}

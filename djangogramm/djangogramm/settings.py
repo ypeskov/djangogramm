@@ -151,3 +151,6 @@ CURRENT_PROTOCOL = env_config('CURRENT_PROTOCOL', default="http")
 CURRENT_HOST = env_config('CURRENT_HOST',  default="localhost")
 CURRENT_PORT = env_config('CURRENT_PORT', default=8000, cast=int)
 CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
