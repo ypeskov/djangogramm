@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from icecream import ic
 
-from posts.models import Post, Image
-from posts.forms import PostForm, ImageForm
+from posts.models import Post, Image, Tag
+from posts.forms import PostForm, ImageForm, TagForm
 
 
 class PostEditView(View):
@@ -66,3 +66,21 @@ class PostEditView(View):
             'images': images
         })
 
+
+class TagAddView(View):
+    template_name = 'posts/add_tag.html'
+
+    def get(self, request):
+        tags = Tag.objects.all()
+        ic(tags)
+        form = TagForm()
+        return render(request, self.template_name, {'tags': tags, 'form': form})
+
+    def post(self, request):
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_tag')
+        else:
+            tags = Tag.objects.all()
+            return render(request, self.template_name, {'tags': tags, 'form': form})
