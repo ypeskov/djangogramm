@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.shortcuts import render
+from django.contrib.auth import logout
 from django.views.decorators.http import require_GET, require_http_methods
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
