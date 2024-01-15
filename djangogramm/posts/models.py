@@ -26,10 +26,6 @@ class Post(models.Model):
     def __repr__(self):
         return f'Post(id={self.id}, title="{self.title}", user_id={self.user.id}, status="{self.status}")'
 
-    class Meta:
-        verbose_name = 'Post'
-        verbose_name_plural = 'Posts'
-
 
 class Image(models.Model):
     id = models.AutoField(primary_key=True)
