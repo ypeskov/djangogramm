@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="content">
+    <h2>Posts</h2>
+    <div class="sort-links">
+      <a href="?order=asc">Sort Ascending</a> | <a href="?order=desc">Sort Descending</a>
+    </div>
+    <ul class="post-list">
+      {% for post in posts %}
+        <li class="post-item">
+          <a href="{% url 'post_detail' post.id %}">
+            <h3>{{ post.title }}</h3>
+            <div class="post-user">
+              <span>{{ post.user.username }}</span>
+            </div>
+            {% for image in post.image_set.all %}
+              <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+            {% endfor %}
+            <p>{{ post.description }}</p>
+            <div class="post-actions">
+              <span class="like-icon">👍</span>
+            </div>
+          </a>
+        </li>
+      {% empty %}
+        <li>No posts available.</li>
+      {% endfor %}
+
+    </ul>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+              <a href="?page=1&order={{ request.GET.order }}">First</a>
+              <a href="?page={{ page_obj.previous_page_number }}&order={{ request.GET.order }}">Previous</a>
+            {% endif %}
+
+          <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+          </span>
+
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&order={{ request.GET.order }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&order={{ request.GET.order }}">Last</a>
+          {% endif %}
+        </span>
+    </div>
+  </div>
+{% endblock %}

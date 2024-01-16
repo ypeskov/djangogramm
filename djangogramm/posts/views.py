@@ -1,5 +1,6 @@
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from icecream import ic
 
@@ -103,3 +104,17 @@ def post_detail(request, post_id):
     }
 
     return render(request, 'posts/post_detail.html', context)
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'posts/post_list.html'
+    context_object_name = 'posts'
+    ordering = ['-created_at']
+    paginate_by = 10
+
+    def get_queryset(self):
+        order = self.request.GET.get('order', 'desc')
+        if order == 'asc':
+            return Post.objects.all().order_by('created_at')
+        return super().get_queryset()

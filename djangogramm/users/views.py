@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.views.decorators.http import require_GET, require_http_methods
 from django.contrib import messages
@@ -50,7 +50,7 @@ def logout_view(request):
 @require_GET
 def home_view(request):
     if request.user.is_authenticated:
-        return render(request, 'users/home_registered.html')
+        return redirect(reverse('post_feed'))
     else:
         return render(request, 'users/home_unregistered.html')
 
