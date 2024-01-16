@@ -5,17 +5,20 @@ body {
     background-color: #f4f4f4;
 }
 
-.site-header {
+.site-header, .site-footer {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 10px 0;
 }
 
-.page-title {
+.page-title, .header-content {
     margin: 0;
-    font-size: 24px;
     text-align: center;
+}
+
+.page-title {
+    font-size: 24px;
 }
 
 .header-content {
@@ -46,7 +49,7 @@ body {
     margin: 0;
 }
 
-.main-nav ul li {
+.main-nav ul li, .main-nav a {
     display: inline;
     margin: 0 10px;
 }
@@ -63,11 +66,22 @@ body {
 }
 
 .form-container {
-    max-width: 50%;
-    margin: auto;
+    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group, .form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
 }
 
 .form-container input[type="text"],
@@ -108,23 +122,40 @@ body {
     border-radius: 4px;
 }
 
+.error, .errorlist li {
+    color: red;
+}
+
 .error {
-    color: red;
     background-color: #ffecec;
+    font-size: 14px;
 }
 
-.errorlist li {
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar-preview, .avatar-upload, .avatar-errors {
+    margin-bottom: 10px;
+}
+
+.avatar-errors {
     color: red;
+    margin-top: 10px;
 }
 
-.site-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+.images-container, .image-preview {
+    margin-bottom: 15px;
 }
 
-.btn {
+.image-preview img {
+    max-width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.btn, .btn-delete {
     display: inline-block;
     padding: 10px 15px;
     text-align: center;
@@ -140,7 +171,7 @@ body {
     background-color: #007bff;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn:hover {
     background-color: #0056b3;
 }
 
@@ -153,28 +184,13 @@ body {
 }
 
 .btn-delete {
-    background-color: #ff4444;
+    background-color: #dc3545;
+}
+
+.btn-success {
+    background-color: #28a745;
 }
 
 .btn-delete:hover {
-    background-color: #cc0000;
+    background-color: #c82333;
 }
-
-.avatar-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.avatar-preview {
-    margin-bottom: 10px;
-}
-
-.avatar-upload {
-    margin-bottom: 10px;
-}
-
-.avatar-errors {
-    color: red;
-    margin-top: 10px;
-}
-
