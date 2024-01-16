@@ -55,6 +55,12 @@ class PostEditView(View):
                 if creating_new_post:
                     saved_post.number_likes = 0
                 saved_post.save()
+
+                tag_ids = request.POST.getlist('tags')
+                tag_ids = [int(tag_id.strip()) for tag_id in tag_ids if tag_id.strip().isdigit()]
+                tags = Tag.objects.filter(id__in=tag_ids)
+                saved_post.tags.set(tags)
+
                 return redirect('post_detail', saved_post.id)
 
         images = Image.objects.filter(post=post)
@@ -72,7 +78,6 @@ class TagAddView(View):
 
     def get(self, request):
         tags = Tag.objects.all()
-        ic(tags)
         form = TagForm()
         return render(request, self.template_name, {'tags': tags, 'form': form})
 
@@ -84,3 +89,17 @@ class TagAddView(View):
         else:
             tags = Tag.objects.all()
             return render(request, self.template_name, {'tags': tags, 'form': form})
+
+
+def post_detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    images = Image.objects.filter(post=post)
+    tags = post.tags.all()
+
+    context = {
+        'post': post,
+        'images': images,
+        'tags': tags,
+    }
+
+    return render(request, 'posts/post_detail.html', context)

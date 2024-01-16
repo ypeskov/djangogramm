@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="post-content">
+    <h2 class="page-title">{{ post.title }}</h2>
+    <p>{{ post.description }}</p>
+
+    <div class="post-images">
+      {% for image in images %}
+        <img src="{{ image.image.url }}" alt="{{ image.description }}">
+      {% endfor %}
+    </div>
+
+    <div class="post-tags">
+      <ul>
+        {% for tag in tags %}
+          <li>{{ tag.tag_name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
