@@ -9,14 +9,18 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from decouple import Config, RepositoryEnv
+
+from icecream import ic
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_config = Config(RepositoryEnv(BASE_DIR / '.env.dev'))
+env_file = os.environ.get('ENV_FILE', BASE_DIR / '.env')
+env_config = Config(RepositoryEnv(BASE_DIR / env_file))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
