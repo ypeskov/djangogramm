@@ -18,7 +18,7 @@ from icecream import ic
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_file = os.environ.get('ENV_FILE', BASE_DIR / '.env')
+env_file = os.environ.get('APP_ENV_FILE', BASE_DIR / '.env.prod')
 env_config = Config(RepositoryEnv(BASE_DIR / env_file))
 
 
