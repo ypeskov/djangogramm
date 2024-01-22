@@ -253,8 +253,8 @@ div.sort-links a:hover {
 }
 
 li.post-item img {
-    max-width: 100%;
     height: auto;
     display: block;
-    margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto 1vh;
 }
