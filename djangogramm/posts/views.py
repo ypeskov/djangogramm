@@ -62,7 +62,7 @@ class PostEditView(View):
                 tags = Tag.objects.filter(id__in=tag_ids)
                 saved_post.tags.set(tags)
 
-                return redirect('post_detail', saved_post.id)
+                return redirect('detail_post', saved_post.id)
 
         images = Image.objects.filter(post=post)
 
@@ -92,7 +92,7 @@ class TagAddView(View):
             return render(request, self.template_name, {'tags': tags, 'form': form})
 
 
-def post_detail(request, post_id):
+def detail_post(request, post_id):
     post = Post.objects.get(id=post_id)
     images = Image.objects.filter(post=post)
     tags = post.tags.all()

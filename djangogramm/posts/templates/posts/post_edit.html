@@ -21,7 +21,9 @@
       <div class="images-container">
         {% for image in images %}
           <div class="image-preview form-group">
-            <img src="{{ image.image.url }}" alt="Image" style="max-width: 600px; height: auto;">
+            {% if image.image %}
+              <img src="{{ image.image.url }}" alt="Image" style="max-width: 600px; height: auto;">
+            {% endif %}
             <button type="submit" name="delete_image" value="{{ image.id }}" class="btn btn-delete">Delete</button>
           </div>
         {% endfor %}

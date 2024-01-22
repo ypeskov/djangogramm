@@ -3,11 +3,17 @@
 {% block content %}
   <div class="post-content">
     <h2 class="page-title">{{ post.title }}</h2>
+    {%  if post.user.id == request.user.id %}
+      <p><a href="{% url 'edit_post' post.id %}" class="btn btn-primary">Edit post</a> </p>
+    {% endif %}
+  
     <p>{{ post.description }}</p>
 
     <div class="post-images">
       {% for image in images %}
-        <img src="{{ image.image.url }}" alt="{{ image.description }}">
+        {% if image.image %}
+          <img src="{{ image.image.url }}" alt="{{ image.description }}">
+        {% endif %}
       {% endfor %}
     </div>
 

@@ -9,13 +9,15 @@
     <ul class="post-list">
       {% for post in posts %}
         <li class="post-item">
-          <a href="{% url 'post_detail' post.id %}">
+          <a href="{% url 'detail_post' post.id %}">
             <h3>{{ post.title }}</h3>
             <div class="post-user">
               <span>{{ post.user.username }}</span>
             </div>
             {% for image in post.image_set.all %}
-              <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+              {% if image.image %}
+                <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+              {% endif %}
             {% endfor %}
             <p>{{ post.description }}</p>
             <div class="post-actions">

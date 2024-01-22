@@ -258,3 +258,14 @@ li.post-item img {
     max-width: 600px;
     margin: 0 auto 1vh;
 }
+
+.post-images {
+    width: 100%;
+    text-align: center;
+}
+
+.post-images img {
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto 1vh auto;
+}
