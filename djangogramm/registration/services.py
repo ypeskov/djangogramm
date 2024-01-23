@@ -1,3 +1,5 @@
+import os
+
 import hashlib
 import datetime
 
@@ -9,7 +11,7 @@ from django.utils import timezone
 from django.conf import settings
 from icecream import ic
 
-from djangogramm.settings import env_config, CURRENT_FULL_DOMAIN
+from djangogramm.settings import CURRENT_FULL_DOMAIN
 from registration.models import ActivationLink
 
 
@@ -51,9 +53,9 @@ def send_activation_email(user, link_hash):
     email = EmailMessage(
         subject,
         html_content,
-        from_email=env_config('EMAIL_FROM'),
+        from_email=os.environ.get('EMAIL_FROM'),
         to=[user.email],
-        reply_to=[env_config('EMAIL_FROM')],
+        reply_to=[os.environ.get('EMAIL_FROM')],
     )
     email.content_subtype = "html"
     email.send()

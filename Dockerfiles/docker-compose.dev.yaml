@@ -2,6 +2,8 @@ services:
   back:
     container_name: "djangogramm"
     platform: "linux/amd64"
+    env_file:
+      - ${APP_ENV_FILE:-../djangogramm/.env.dev}
     build:
       context: "../"
       dockerfile: "./Dockerfiles/Dockerfile"

@@ -11,16 +11,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import Config, RepositoryEnv
 
 from icecream import ic
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env_file = os.environ.get('APP_ENV_FILE', BASE_DIR / '.env.prod')
-env_config = Config(RepositoryEnv(BASE_DIR / env_file))
-
+ic(os.environ)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -92,11 +89,11 @@ WSGI_APPLICATION = 'djangogramm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env_config('DB_NAME', default='db'),
-        'USER': env_config('DB_USER', default='user'),
-        'PASSWORD': env_config('DB_PASSWORD', default='password'),
-        'HOST': env_config('DB_HOST', default='localhost'),
-        'PORT': env_config('DB_PORT', default=5432, cast=int),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', 5432),
+        'NAME': os.environ.get('DB_NAME', 'db'),
+        'USER': os.environ.get('DB_USER', 'user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
         'OPTIONS': {
             # 'service': 'my_service',
         },
@@ -148,17 +145,16 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env_config('EMAIL_HOST', default="smtp.gmail.com")
-EMAIL_PORT = env_config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = env_config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = env_config('EMAIL_HOST_USER', default="user@example.com")
-EMAIL_HOST_PASSWORD = env_config('EMAIL_HOST_PASSWORD', default="password")
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user@example.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'password')
 
-CURRENT_PROTOCOL = env_config('CURRENT_PROTOCOL', default="http")
-CURRENT_HOST = env_config('CURRENT_HOST',  default="localhost")
-CURRENT_PORT = env_config('CURRENT_PORT', default=8000, cast=int)
+CURRENT_PROTOCOL = os.environ.get('CURRENT_PROTOCOL', 'http')
+CURRENT_HOST = os.environ.get('CURRENT_HOST', 'localhost')
+CURRENT_PORT = os.environ.get('CURRENT_PORT', 8000)
 CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
 
 MEDIA_URL = '/media/'
