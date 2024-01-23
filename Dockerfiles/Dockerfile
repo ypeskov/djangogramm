@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install debugpy
 
-COPY ./djangogramm /app
+COPY . /app
 
 EXPOSE 8000
 
@@ -23,7 +23,7 @@ FROM python:3.12.1-slim-bullseye as prod
 
 WORKDIR /app
 
-COPY --from=dev /app /app
+COPY --from=dev /app/djangogramm /app
 
 RUN apt-get update && apt-get install -y gcc libpq-dev
 
