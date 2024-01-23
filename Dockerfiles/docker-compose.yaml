@@ -1,23 +1,30 @@
 services:
   back:
+    image: ypeskov/djangogramm:latest
+    env_file:
+      - .env
     container_name: "djangogramm"
     platform: "linux/amd64"
-    build:
-      context: "../"
-      dockerfile: "./Dockerfiles/Dockerfile"
-      target: ${TARGET:-dev}
     ports:
       - 8000:8000
-      - 5678:5678
     tty: true
     volumes:
-      - ../djangogramm:/app
-      - ../djangogramm/media:/app/media
+      - ./media:/app/media
     restart: always
-    # command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
     environment:
-      - DEBUG=True
-      - DB_HOST=db-djangogramm
-      - DB_PORT=5432
-      - PYTHONPATH=/app:$PYTHONPATH
-      - APP_ENV_FILE=${APP_ENV_FILE:-.env.prod}
+      - DEBUG=False
+    depends_on:
+      - db-djangogramm
+
+  db-djangogramm:
+    image: postgres:15.3-bullseye
+    container_name: Postgres-djangogramm
+    restart: always
+    environment:
+      # POSTGRES_USER: urlshortener
+      POSTGRES_PASSWORD: djangogramm
+    ports:
+      - 5432:5432
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+
