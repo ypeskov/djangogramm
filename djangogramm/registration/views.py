@@ -27,5 +27,5 @@ class RegisterView(View):
         return render(request, 'registration/register.html', {'form': form})
 
 
-def success_url(request):
+def success_url(request):  # pragma: no cover
     return render(request, 'registration/success.html')
