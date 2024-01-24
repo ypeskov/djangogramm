@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-DB_USER=postgres DB_PASSWORD=djangogramm pytest
+source .env.test
+export DB_USER
+export DB_PASSWORD
+
+pytest --cov=app --cov-report=term-missing --cov-fail-under=100
