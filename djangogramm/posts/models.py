@@ -20,10 +20,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return self.title
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         return f'Post(id={self.id}, title="{self.title}", user_id={self.user.id}, status="{self.status}")'
 
 
@@ -34,7 +34,7 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return f'Image for Post {self.post.title}'
 
 
@@ -44,7 +44,7 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return f'Like by {self.user.username} for Post {self.post.title}'
 
 
@@ -54,6 +54,6 @@ class Tag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
+    def __str__(self):  # pragma: no cover
         return self.tag_name
 

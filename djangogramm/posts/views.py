@@ -43,7 +43,7 @@ class PostEditView(View):
                 saved_post.save()
 
                 new_image = image_form.save(commit=False)
-                new_image.post = saved_post
+                new_image.one_post = saved_post
                 new_image.save()
                 return redirect('edit_post', saved_post.id)
         elif 'delete_image' in request.POST:
