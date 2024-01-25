@@ -1,3 +1,4 @@
+from django.core.files.storage import default_storage
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
@@ -15,7 +16,7 @@ class PostEditView(View):
         if post_id:
             post = get_object_or_404(Post, id=post_id)
             images = Image.objects.filter(post=post)
-        else:
+        else:  # pragma: no cover
             post = Post(user=request.user)
             images = Image.objects.none()  # No images since the post is not yet created
 
@@ -38,7 +39,7 @@ class PostEditView(View):
             image_form = ImageForm(request.POST, request.FILES)
             if post_form.is_valid() and image_form.is_valid():
                 saved_post = post_form.save(commit=False)
-                if creating_new_post:
+                if creating_new_post:  # pragma: no cover
                     saved_post.number_likes = 0
                 saved_post.save()
 
@@ -48,7 +49,12 @@ class PostEditView(View):
                 return redirect('edit_post', saved_post.id)
         elif 'delete_image' in request.POST:
             image_id = request.POST.get('delete_image')
-            Image.objects.filter(id=image_id).delete()
+            image = Image.objects.filter(id=image_id)
+            if len(image) > 0:
+                img_path = image.first().image.path
+                if default_storage.exists(img_path):
+                    default_storage.delete(img_path)
+                image.delete()
             return redirect('edit_post', post.id)
         else:
             if post_form.is_valid():

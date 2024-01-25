@@ -1,8 +1,10 @@
 import pytest
 
 from django.urls import reverse
+from django.test import override_settings
 from icecream import ic
 
+from djangogramm.settings import BASE_DIR
 from posts.forms import PostForm
 from posts.models import Post
 
@@ -62,6 +64,7 @@ def test_post_post_edit_view(client, one_post):
     assert one_post.status == 'posted'
 
 
+@override_settings(MEDIA_ROOT=BASE_DIR / 'posts/test_data/media/')
 def test_post_create_view(client, create_user, test_password):
     email = 'user@example.com'
     user = create_user(email=email, password=test_password)
@@ -77,8 +80,37 @@ def test_post_create_view(client, create_user, test_password):
     assert response.status_code == 302
 
     post = Post.objects.get(title='New Title')
+
     assert post.description == 'New Description'
     assert post.status == 'posted'
     assert post.user == user
     assert post.number_likes == 0
     assert post.tags.count() == 0
+
+    with open(BASE_DIR / 'posts/test_data/test_images/img1.jpg', 'rb') as img:
+        image_data = {
+            'post': post.id,
+            'title': post.title,
+            'description': post.description,
+            'status': post.status,
+            'image': img,
+            'add_image': 'Add Image'
+        }
+        image_response = client.post(reverse('edit_post', kwargs={'post_id': post.id}), image_data, follow=True)
+    assert image_response.status_code == 200
+    post.refresh_from_db()
+    assert post.image_set.count() == 1
+
+    image = post.image_set.first()
+    image_data = {
+        'post': post.id,
+        'title': post.title,
+        'description': post.description,
+        'status': post.status,
+        'delete_image': image.id,
+    }
+    image_response = client.post(reverse('edit_post', kwargs={'post_id': post.id}), image_data, follow=True)
+    assert image_response.status_code == 200
+    post.refresh_from_db()
+    assert post.image_set.count() == 0
+
