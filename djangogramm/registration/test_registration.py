@@ -1,5 +1,3 @@
-import pytest
-
 from django.urls import reverse
 from icecream import ic
 from django.contrib.auth.models import User

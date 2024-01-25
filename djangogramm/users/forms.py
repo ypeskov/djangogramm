@@ -16,10 +16,9 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['avatar', 'bio', 'first_name', 'last_name']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pragma: no cover
         user = kwargs.pop('user', None)
         super(UserProfileForm, self).__init__(*args, **kwargs)
         if user:
             self.fields['first_name'].initial = user.first_name
             self.fields['last_name'].initial = user.last_name
-

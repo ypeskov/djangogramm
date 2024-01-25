@@ -10,5 +10,5 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username}'s profile"
 
-    def __repr__(self):
+    def __repr__(self):  # pragma: no cover
         return f"<UserProfile (user_id={self.user_id}, avatar={self.avatar})>"

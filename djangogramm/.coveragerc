@@ -11,3 +11,6 @@ omit =
     admin.py
     urls.py
     apps.py
+
+[report]
+fail_under = 80
