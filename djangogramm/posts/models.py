@@ -24,7 +24,8 @@ class Post(models.Model):
         return self.title
 
     def __repr__(self):  # pragma: no cover
-        return f'Post(id={self.id}, title="{self.title}", user_id={self.user.id}, status="{self.status}")'
+        return f'Post(id={self.id}, title="{self.title}", user_id={self.user.id}, status="{self.status} ' + \
+            f'description="{self.description[:20]}...", number_likes={self.number_likes})'
 
 
 class Image(models.Model):
@@ -56,4 +57,3 @@ class Tag(models.Model):
 
     def __str__(self):  # pragma: no cover
         return self.tag_name
-

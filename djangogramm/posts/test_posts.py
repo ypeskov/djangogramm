@@ -114,3 +114,30 @@ def test_post_create_view(client, create_user, test_password):
     post.refresh_from_db()
     assert post.image_set.count() == 0
 
+
+def test_post_try_create_empty_title(client, create_user, test_password):
+    email = 'user@example.com'
+    user = create_user(email=email, password=test_password)
+    client.force_login(user)
+    url = reverse('new_post')
+
+    form_data = {
+        'title': '',
+        'description': 'New Description',
+        'status': 'posted'
+    }
+    response = client.post(url, form_data)
+    assert response.status_code == 200
+    assert 'This field is required.' in str(response.content)
+
+
+def test_edit_post_empty_title(client, one_post):
+    url = reverse('edit_post', kwargs={'post_id': one_post.id})
+    form_data = {
+        'title': '',
+        'description': 'Updated Description',
+        'status': 'posted'
+    }
+    response = client.post(url, form_data)
+    assert response.status_code == 200
+    assert 'This field is required.' in str(response.content)

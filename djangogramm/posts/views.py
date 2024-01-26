@@ -69,8 +69,10 @@ class PostEditView(View):
                 saved_post.tags.set(tags)
 
                 return redirect('detail_post', saved_post.id)
-
-        images = Image.objects.filter(post=post)
+        if not creating_new_post:
+            images = Image.objects.filter(post=post)
+        else:
+            images = Image.objects.none()
 
         return render(request, self.template_name, {
             'post_form': post_form,
