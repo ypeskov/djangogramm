@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home - DjangoGram{% endblock %}
+
+{% block content %}
+  <div class="home-intro">
+    <h2>Welcome to DjangoGram - Your Place to Connect and Share!</h2>
+    <p>DjangoGram is a vibrant social platform where you can share your moments, connect with friends, and explore a world of interests. Join our community to share and connect.</p>
+    
+    <div class="auth-links">
+      <a href="{% url 'login' %}" class="btn btn-primary">Log in</a>
+      <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Add New Tag</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Add Tag</button>
+    </form>
+    <div>
+      <h3>Existing Tags:</h3>
+      <p>
+        {% for tag in tags %}
+          {{ tag.tag_name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
+    </div>
+  </div>
+{% endblock %}
