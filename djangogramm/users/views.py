@@ -21,6 +21,8 @@ from registration.models import ActivationLink
 class UserLogin(LoginView):
     template_name = 'users/login.html'
 
+    redirect_authenticated_user = True
+
 
 @require_GET
 def logout_view(request):
