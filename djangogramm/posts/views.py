@@ -36,12 +36,12 @@ class PostEditView(View):
         post_form = PostForm(request.POST, instance=post)
 
         if 'add_image' in request.POST:
-            add_image(request, post_form, creating_new_post)
+            return add_image(request, post_form, creating_new_post)
         elif 'delete_image' in request.POST:
-            delete_image(request, post)
+            return delete_image(request, post)
         else:
             if post_form.is_valid():
-                save_post(post_form, request, creating_new_post)
+                return save_post(post_form, request, creating_new_post)
 
         # prepare images variable to be used in the template. Empty if creating a new post
         if not creating_new_post:
