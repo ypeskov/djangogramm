@@ -5,8 +5,8 @@ from django.views.generic import ListView
 from icecream import ic
 
 from posts.models import Post, Image, Tag
-from posts.forms import PostForm, ImageForm, TagForm
-from posts.services import add_image, delete_image, save_post
+from posts.forms import PostForm, TagForm
+from posts.services import delete_image, save_post
 
 
 class PostEditView(View):
@@ -21,11 +21,9 @@ class PostEditView(View):
             images = Image.objects.none()  # No images since the post is not yet created
 
         post_form = PostForm(instance=post)
-        image_form = ImageForm()
 
         return render(request, self.template_name, {
             'post_form': post_form,
-            'image_form': image_form,
             'post': post,
             'images': images
         })
@@ -35,9 +33,7 @@ class PostEditView(View):
         post = get_object_or_404(Post, id=post_id) if post_id else Post(user=request.user)
         post_form = PostForm(request.POST, instance=post)
 
-        if 'add_image' in request.POST:
-            return add_image(request, post_form, creating_new_post)
-        elif 'delete_image' in request.POST:
+        if 'delete_image' in request.POST:
             return delete_image(request, post)
         else:
             if post_form.is_valid():
@@ -51,7 +47,6 @@ class PostEditView(View):
 
         return render(request, self.template_name, {
             'post_form': post_form,
-            'image_form': ImageForm(),
             'post': post,
             'images': images
         })
