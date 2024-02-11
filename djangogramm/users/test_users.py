@@ -53,17 +53,6 @@ def test_user_login_not_exists(client, create_user):
     assert 'Please enter a correct username and password' in response.content.decode()
 
 
-# def test_user_login_not_active(client, create_user):
-#     url = reverse('login')
-#     user_email = 'user@example.com'
-#     user = create_user(email=user_email, password='password123')
-#     user.is_active = False
-#     user.save()
-#     response = client.post(url, {'username': user.username, 'password': 'password123'})
-#     assert response.status_code == 200
-#     assert 'User is not active' in response.content.decode()
-
-
 def test_user_logout(create_user, client):
     user_email = 'user@example.com'
     user = create_user(email=user_email, password='password123')
