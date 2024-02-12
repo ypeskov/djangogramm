@@ -5,6 +5,7 @@ from django.views.decorators.http import require_GET, require_http_methods
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
@@ -12,33 +13,14 @@ from django.contrib.auth import login
 
 from icecream import ic
 
-from users.forms import LoginForm
-from users.services import authenticate_custom
 from users.models import UserProfile
 from users.forms import UserProfileForm
 from registration.models import ActivationLink
 
 
-@require_http_methods(['GET', 'POST'])
-def login_view(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate_custom(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('home')
-                else:
-                    messages.error(request, 'User is not active')
-            else:
-                messages.error(request, 'Incorrect credentials')
-    else:  # pragma: no cover
-        form = LoginForm()
-
-    return render(request, 'users/login.html', {'form': form})
+class UserLogin(LoginView):
+    template_name = 'users/login.html'
+    redirect_authenticated_user = True
 
 
 @require_GET

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     "65.21.159.119",
     "localhost",
     "127.0.0.1",
+    os.environ.get('CURRENT_HOST', 'localhost'),
 ]
 
 
@@ -157,3 +158,5 @@ CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_REDIRECT_URL = 'home'

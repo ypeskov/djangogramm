@@ -1,5 +1,5 @@
 from django import forms
-from posts.models import Post, Image, Tag
+from posts.models import Post, Tag
 
 
 class PostForm(forms.ModelForm):
@@ -11,15 +11,6 @@ class PostForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'})
-        }
-
-
-class ImageForm(forms.ModelForm):
-    class Meta:
-        model = Image
-        fields = ['image']
-        widgets = {
-            'image': forms.FileInput(attrs={'class': 'form-control-file'})
         }
 
 
