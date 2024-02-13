@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'registration',
     'users',
     'posts',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,39 @@ CURRENT_HOST = os.environ.get('CURRENT_HOST', 'localhost')
 CURRENT_PORT = os.environ.get('CURRENT_PORT', 8000)
 CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
 
+# Set up storage depending on the environment
+ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'LOCATION': BASE_DIR / 'media',
+        'BASE_URL': '/media/',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        'LOCATION': BASE_DIR / 'static',
+        'BASE_URL': '/static/',
+    },
+}
+
+if ENVIRONMENT == 'production':
+    from google.oauth2 import service_account
+
+    STORAGES['default'] = {
+        'BACKEND': 'storages.backends.gcloud.GoogleCloudStorage',
+        'GS_DEFAULT_ACL': 'publicRead',
+        'GS_QUERYSTRING_AUTH': False,
+        'OPTIONS': {
+            'bucket_name': 'imahes',
+
+        },
+    }
+
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+        "/SECRET/SERVICE_ACCOUNT"
+    )
+ic(STORAGES)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-ENV_FILE=.env.dev
-export ENV_FILE
+# Load environment variables from .env.dev file
+if [ -f .env.dev ]; then
+    export $(cat .env.dev | sed 's/#.*//g' | xargs)
+fi
 
 # Start the Django development server
 python manage.py runserver
 
-unset ENV_FILE
