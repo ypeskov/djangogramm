@@ -13,12 +13,10 @@ def add_images(post: Post, files):
 
 def delete_image(request, post):
     image_id = request.POST.get('delete_image')
-    image = Image.objects.filter(id=image_id)
-    if len(image) > 0:
-        img_path = image.first().image.path
-        if default_storage.exists(img_path):
-            default_storage.delete(img_path)
-        image.delete()
+    images = Image.objects.filter(id=image_id)
+    for img in images:
+        img.image.delete()
+        img.delete()
     return redirect('edit_post', post.id)
 
 

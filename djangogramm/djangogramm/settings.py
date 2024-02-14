@@ -186,9 +186,10 @@ if ENVIRONMENT == 'production':
         },
     }
 
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-        "/SECRET/SERVICE_ACCOUNT"
-    )
+    if os.environ.get('MOUNTED_SECRET', False) == 'True':
+        GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+            "/SECRET/SERVICE_ACCOUNT"
+        )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

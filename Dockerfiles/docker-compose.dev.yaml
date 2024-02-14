@@ -25,6 +25,7 @@ services:
       - APP_ENV_FILE=${APP_ENV_FILE:-.env.prod}
 #      - DJANGO_ENVIRONMENT=production
 #      - GOOGLE_APPLICATION_CREDENTIALS=/app/djangogramm/gcp-key.json
+#      - MOUNTED_SECRET=False
     depends_on:
       - db-djangogramm
 
