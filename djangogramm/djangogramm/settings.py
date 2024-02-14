@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from google.oauth2 import service_account
+
 from icecream import ic
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -174,8 +176,6 @@ STORAGES = {
 }
 
 if ENVIRONMENT == 'production':
-    from google.oauth2 import service_account
-
     STORAGES['default'] = {
         'BACKEND': 'storages.backends.gcloud.GoogleCloudStorage',
         'GS_DEFAULT_ACL': 'publicRead',
@@ -189,7 +189,7 @@ if ENVIRONMENT == 'production':
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         "/SECRET/SERVICE_ACCOUNT"
     )
-ic(STORAGES)
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
