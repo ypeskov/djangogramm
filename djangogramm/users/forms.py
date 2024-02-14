@@ -9,8 +9,12 @@ class LoginForm(forms.Form):
 
 
 class UserProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=255, required=False)
-    last_name = forms.CharField(max_length=255, required=False)
+    first_name = forms.CharField(max_length=255, required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                 label='First Name:')
+    last_name = forms.CharField(max_length=255, required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                label='Last Name:')
 
     class Meta:
         model = UserProfile
