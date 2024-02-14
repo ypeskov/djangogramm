@@ -48,6 +48,9 @@ class Like(models.Model):
     def __str__(self):  # pragma: no cover
         return f'Like by {self.user.username} for Post {self.post.title}'
 
+    class Meta:
+        unique_together = ('post', 'user')
+
 
 class Tag(models.Model):
     id = models.AutoField(primary_key=True)

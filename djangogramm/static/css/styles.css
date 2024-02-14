@@ -85,9 +85,7 @@
     object-fit: cover;
 }
 .messages {
-    max-width: 50%;
-    margin: auto;
-    padding: 20px;
+    margin: 0 auto 20px;
 }
 
 .messages div {
@@ -175,4 +173,9 @@ li.post-item img {
     max-width: 90%;
     height: auto;
     margin: 0 auto 1vh auto;
+}
+
+a.post-link-details {
+    text-decoration: none;
+    color: #000;
 }

@@ -2,10 +2,12 @@
 
 {% block content %}
   <div class="post-content">
-    <h2 class="page-title">{{ post.title }}</h2>
+    <h1 class="page-title">{{ post.title }}</h1>
     {%  if post.user.id == request.user.id %}
       <p><a href="{% url 'edit_post' post.id %}" class="btn btn-primary">Edit post</a> </p>
     {% endif %}
+  
+    <p>posted by <b><a href="{% url 'user_info' post.user.id %}">{{ post.user.first_name }}</a></b> on {{ post.created_at }}</p>
   
     <p>{{ post.description }}</p>
 

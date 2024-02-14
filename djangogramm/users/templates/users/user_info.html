@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}User's {{ user.first_name }} {{ user.last_name }} Profile{% endblock %}
+
+{% block content %}
+  <h2>User Information</h2>
+
+  {% include 'partials/messages.html' %}
+
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{{ user.userprofile.avatar.url }}" class="img-thumbnail"
+           alt="{{ user.first_name }} {{ user.last_name }}">
+    </div>
+    <div class="col-md-8">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p>
+              <strong>
+                {% if user.profile.bio %}
+                  Bio:
+                {% else %}
+                  Bio:
+                {% endif %}
+              </strong> {{ user.userprofile.bio }}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {% if is_following %}
+              <a href="{% url 'follow_user' user.id %}" class="btn btn-warning">Unfollow</a>
+            {% else %}
+              <a href="{% url 'follow_user' user.id %}" class="btn btn-primary">Follow</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Posts</h2>
+      {% for post in posts %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5>{{ post.title }}</h5>
+          </div>
+          <div class="card-body">
+            <p>{{ post.description }}</p>
+            <hr>
+            <p><small>Posted on {{ post.created_at }} by {{ post.user.username }}</small></p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
