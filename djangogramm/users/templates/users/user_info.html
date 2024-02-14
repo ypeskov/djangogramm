@@ -9,8 +9,10 @@
 
   <div class="row">
     <div class="col-md-4">
-      <img src="{{ user.userprofile.avatar.url }}" class="img-thumbnail"
-           alt="{{ user.first_name }} {{ user.last_name }}">
+      {% if user.userprofile.avatar %}
+        <img src="{{ user.userprofile.avatar.url }}" class="img-thumbnail"
+             alt="{{ user.first_name }} {{ user.last_name }}">
+      {%  endif %}
     </div>
     <div class="col-md-8">
       <div class="container">
