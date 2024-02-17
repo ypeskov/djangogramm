@@ -6,7 +6,7 @@ from icecream import ic
 
 from posts.models import Post, Image, Tag
 from posts.forms import PostForm, TagForm
-from posts.services import delete_image, save_post
+from posts.services import delete_image, save_post, get_posts_from_subscriptions
 
 
 class PostEditView(View):
@@ -89,10 +89,21 @@ class PostListView(ListView):
     template_name = 'posts/post_list.html'
     context_object_name = 'posts'
     ordering = ['-created_at']
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         order = self.request.GET.get('order', 'desc')
-        if order == 'asc':
-            return Post.objects.all().order_by('created_at')
-        return super().get_queryset()
+        self.show_subscriptions = self.request.GET.get('show_subscriptions', 'false') == 'true'
+
+        if self.show_subscriptions:
+            return get_posts_from_subscriptions(self.request.user, order)
+        elif order == 'asc':
+            return Post.objects.order_by('created_at')
+        else:
+            return Post.objects.order_by('-created_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = 'asc' if self.request.GET.get('order', 'desc') == 'desc' else 'desc'
+        context['show_subs'] = '&show_subscriptions=true' if self.show_subscriptions else ''
+        return context

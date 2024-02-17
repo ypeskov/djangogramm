@@ -2,6 +2,7 @@
   <ul>
     <li><a href="{% url 'home' %}">Home</a></li>
     {% if user.is_authenticated %}
+      <li><a href="{% url 'show_subscriptions' %}?show_subscriptions=true">Subscriptions</a></li>
       <li><a href="{% url 'profile' %}">Profile</a></li>
       <li><a href="{% url 'new_post' %}">Create Post</a></li>
       <li><a href="{% url 'add_tag' %}">Create Tag</a></li>

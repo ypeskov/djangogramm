@@ -4,7 +4,8 @@
   <div class="content">
     <h2>Posts</h2>
     <div class="sort-links">
-      <a href="?order=asc">Sort Ascending</a> | <a href="?order=desc">Sort Descending</a>
+      <a href="?order={{ order }}{{ show_subs }}">Sort Ascending</a> | <a
+        href="?order={{ order }}{{ show_subs }}">Sort Descending</a>
     </div>
     <ul class="post-list">
       {% for post in posts %}
@@ -13,14 +14,14 @@
           <div class="post-user">
             <span>{{ post.user.username }}</span>
           </div>
-          
+
           <a href="{% url 'detail_post' post.id %}" class="post-link-details">
             {% for image in post.image_set.all %}
               {% if image.image %}
                 <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
               {% endif %}
             {% endfor %}
-          
+
             <p class="post-date">{{ post.created_at }}</p>
             <p class="post-description">{{ post.description }}</p>
           </a>
@@ -47,8 +48,8 @@
           </span>
 
           {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}&order={{ request.GET.order }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}&order={{ request.GET.order }}">Last</a>
+            <a href="?page={{ page_obj.next_page_number }}&order={{ order }}{{ show_subs }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&order={{ order }}{{ show_subs }}">Last</a>
           {% endif %}
         </span>
     </div>
