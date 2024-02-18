@@ -7,25 +7,17 @@ fi
 
 TAG_VERSION=$1
 
-TARGET=prod docker-compose -f Dockerfiles/docker-compose.dev.yaml --env-file djangogramm/.env.dev build --no-cache
-
-docker tag dockerfiles-back ypeskov/djangogramm:"$TAG_VERSION"
-
-docker push ypeskov/djangogramm:"$TAG_VERSION"
-
-echo "The image has been pushed to the Docker Hub. Version: $TAG_VERSION"
-
+TARGET=prod docker-compose -f Dockerfiles/docker-compose.dev.yaml --env-file djangogramm/.env.dev build --no-cache && \
+docker tag dockerfiles-back ypeskov/djangogramm:"$TAG_VERSION" && \
+docker push ypeskov/djangogramm:"$TAG_VERSION" && \
 gcloud run deploy djangogramm \
  --image ypeskov/djangogramm:"$TAG_VERSION" \
  --platform managed \
  --region us-central1 \
- --allow-unauthenticated
-
-echo "The image has been deployed to the Google Cloud Run. Version: $TAG_VERSION"
-
+ --allow-unauthenticated && \
 gcloud run services update-traffic djangogramm \
  --to-latest \
  --project djangogramm-411918 \
- --region us-central1
-
-echo "The traffic has been updated to the latest version. Version: $TAG_VERSION"
+ --region us-central1 && \
+echo "$TAG_VERSION" > version.txt && \
+echo "The image has been pushed to the Docker Hub and deployed to the Google Cloud Run. Traffic updated to the latest version. Version saved to version.txt: $TAG_VERSION"

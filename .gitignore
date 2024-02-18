@@ -12,3 +12,5 @@ djangogramm/media/**/*
 .env.test
 .env
 gcp-key.json
+version.txt
+
