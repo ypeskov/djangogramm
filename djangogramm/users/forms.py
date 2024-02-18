@@ -3,11 +3,6 @@ from django import forms
 from .models import UserProfile
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=100, label='Email')
-    password = forms.CharField(widget=forms.PasswordInput, label='Password')
-
-
 class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=255, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}),

@@ -1,31 +1,33 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="form-container">
+  <div class="form-container">
     <h2>Login</h2>
     {% if form.non_field_errors %}
-        <div class="messages">
-            {% for error in form.non_field_errors %}
-                <div class="error">{{ error }}</div>
-            {% endfor %}
-        </div>
+      <div class="messages">
+        {% for error in form.non_field_errors %}
+          <div class="error">{{ error }}</div>
+        {% endfor %}
+      </div>
     {% endif %}
     <form method="post" class="login-form">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <div class="error">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button type="submit" class="submit-button">Login</button>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {% render_field field class="form-control" %}
+          {% if field.errors %}
+            {% for error in field.errors %}
+              <div class="error">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Login</button>
     </form>
-</div>
+  </div>
 {% endblock %}

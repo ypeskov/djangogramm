@@ -3,29 +3,28 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
-<div class="form-container">
+  <div class="form-container">
     <h2>Registration</h2>
     {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-            {% endfor %}
-        </div>
+      <div class="messages">
+        {% for message in messages %}
+          <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+      </div>
     {% endif %}
     <form method="post" class="registration-form">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <div class="error">{{ error }}</div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button type="submit" class="submit-button">Register</button>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          {{ field.label_tag }} {{ field }}
+          {% if field.errors %}
+            {% for error in field.errors %}
+              <div class="error">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Register</button>
     </form>
-</div>
+  </div>
 {% endblock %}
