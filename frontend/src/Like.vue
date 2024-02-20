@@ -7,14 +7,14 @@ const likes = ref(0);
 const userLikes = ref(false);
 
 onMounted(async () => {
-  const response = await fetch(`/posts/${props.postId}/get-likes`);
+  const response = await fetch(`/posts/${props.postId}/get-likes/`);
   let likesData = await response.json();
   likes.value = likesData['likes'];
   userLikes.value = likesData['user_likes'];
 });
 
 async function like() {
-  const response = await fetch(`/posts/${props.postId}/like`);
+  const response = await fetch(`/posts/${props.postId}/like/`);
   let likesData = await response.json();
   likes.value = likesData['likes'];
   userLikes.value = likesData['user_likes'];
