@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from icecream import ic
 
 from posts.models import Image, Tag, Post
+from users.models import Subscription
 
 
 def add_images(post: Post, files):
@@ -13,12 +14,10 @@ def add_images(post: Post, files):
 
 def delete_image(request, post):
     image_id = request.POST.get('delete_image')
-    image = Image.objects.filter(id=image_id)
-    if len(image) > 0:
-        img_path = image.first().image.path
-        if default_storage.exists(img_path):
-            default_storage.delete(img_path)
-        image.delete()
+    images = Image.objects.filter(id=image_id)
+    for img in images:
+        img.image.delete()
+        img.delete()
     return redirect('edit_post', post.id)
 
 
@@ -36,3 +35,12 @@ def save_post(post_form, request, creating_new_post):
     add_images(saved_post, request.FILES)
 
     return redirect('detail_post', saved_post.id)
+
+
+def get_posts_from_subscriptions(user, order='desc'):
+    following_ids = Subscription.objects.filter(follower=user).values_list('following_id', flat=True)
+    order_by = 'created_at' if order == 'asc' else '-created_at'
+    posts = Post.objects.filter(user__id__in=following_ids).order_by(order_by)
+
+    return posts
+

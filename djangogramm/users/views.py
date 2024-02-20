@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import UpdateView
@@ -10,10 +10,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth import login
+from django.views import View
+from django.contrib.auth.models import User
 
 from icecream import ic
 
-from users.models import UserProfile
+from users.models import UserProfile, Subscription
+from posts.models import Post
 from users.forms import UserProfileForm
 from registration.models import ActivationLink
 
@@ -81,3 +84,42 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return get_object_or_404(UserProfile, user=self.request.user)
+
+
+class UserInfoView(View):
+    template_name = 'users/user_info.html'
+
+    def get(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        posts = Post.objects.filter(user=user).order_by('-created_at')[:10]
+
+        is_following = False
+        try:
+            Subscription.objects.get(follower=request.user, following=user)
+            is_following = True
+        except ObjectDoesNotExist:
+            is_following = False
+
+        return render(request, self.template_name, {'user': user, 'posts': posts, 'is_following': is_following})
+
+
+@require_GET
+def follow_user(request, user_id):
+    follower_user = request.user
+    following_user = User.objects.get(id=user_id)
+    if follower_user == following_user:
+        messages.error(request, 'You cannot follow yourself.')
+        return redirect(reverse('user_info', args=[user_id]))
+
+    # if user is already following then unfollow and vice versa
+    try:
+        subscription = Subscription.objects.get(follower=follower_user, following=following_user)
+        subscription.delete()
+    except ObjectDoesNotExist as e:
+        subscription = Subscription(follower=follower_user, following=following_user)
+        subscription.save()
+    except Exception as e:
+        messages.error(request, 'Something went wrong. Please try again.')
+        return redirect(reverse('user_info', args=[user_id]))
+
+    return redirect(reverse('user_info', args=[user_id]))
