@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
+from django.http import JsonResponse
 
 from icecream import ic
 
@@ -120,9 +121,25 @@ class PostListView(ListView):
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     like_qs = Like.objects.filter(user=request.user, post=post)
-    ic(like_qs)
+
     if like_qs.exists():
         like_qs[0].delete()
     else:
         Like.objects.create(user=request.user, post=post)
-    return redirect('post_feed')
+
+    user_likes = post.like_set.filter(user=request.user).exists()
+
+    return JsonResponse({
+        'likes': post.like_set.count(),
+        'user_likes': user_likes})
+
+
+@login_required
+@require_GET
+def get_likes(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user_likes = post.like_set.filter(user=request.user).exists()
+
+    return JsonResponse({
+        'likes': post.like_set.count(),
+        'user_likes': user_likes})

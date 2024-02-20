@@ -14,3 +14,4 @@ djangogramm/media/**/*
 gcp-key.json
 version.txt
 
+node_modules/

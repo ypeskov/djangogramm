@@ -157,8 +157,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'password')
 
 CURRENT_PROTOCOL = os.environ.get('CURRENT_PROTOCOL', 'http')
 CURRENT_HOST = os.environ.get('CURRENT_HOST', 'localhost')
-CURRENT_PORT = os.environ.get('CURRENT_PORT', 8000)
-CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
+CURRENT_PORT = os.environ.get('CURRENT_PORT', None)
+if CURRENT_PORT:
+    CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}:{CURRENT_PORT}"
+else:
+    CURRENT_FULL_DOMAIN = f"{CURRENT_PROTOCOL}://{CURRENT_HOST}"
 
 # Set up storage depending on the environment
 ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'development')
