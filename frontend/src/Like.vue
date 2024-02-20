@@ -1,16 +1,31 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const props = defineProps(['postId']);
 
 const likes = ref(0);
+const userLikes = ref(false);
 
-function like() {
-  likes.value++
+onMounted(async () => {
+  const response = await fetch(`/posts/${props.postId}/get-likes`);
+  let likesData = await response.json();
+  likes.value = likesData['likes'];
+  userLikes.value = likesData['user_likes'];
+});
+
+async function like() {
+  const response = await fetch(`/posts/${props.postId}/like`);
+  let likesData = await response.json();
+  likes.value = likesData['likes'];
+  userLikes.value = likesData['user_likes'];
 }
 </script>
 
 <template>
   <div class="mb-3">
-    <button class="btn btn-primary" @click="like">Like</button>
+    <button class="btn" :class="{'btn-warning': userLikes, 'btn-primary': !userLikes}" @click="like">
+      {{ userLikes ? 'Unlike' : 'Like' }}
+    </button>
     <span class="ms-3">{{ likes }} likes</span>
   </div>
 </template>
