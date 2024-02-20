@@ -25,9 +25,9 @@
             <p class="post-date">{{ post.created_at }}</p>
             <p class="post-description">{{ post.description }}</p>
           </a>
-        <div class="mb-3">
-          <span>{{ post.like_set.count }}</span>
-          <a href="{% url 'like_post' post.id %}" class="btn btn-info">👍</a>
+
+        <div id="like-{{ post.id }}">
+          <like></like>
         </div>
 
         </li>
