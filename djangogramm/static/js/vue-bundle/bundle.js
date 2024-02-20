@@ -11064,11 +11064,11 @@ const jE = { class: "mb-3" }, UE = { class: "ms-3" }, KE = {
   setup(e) {
     const t = e, n = xt(0), i = xt(!1);
     ti(async () => {
-      let o = await (await fetch(`/posts/${t.postId}/get-likes`)).json();
+      let o = await (await fetch(`/posts/${t.postId}/get-likes/`)).json();
       n.value = o.likes, i.value = o.user_likes;
     });
     async function s() {
-      let o = await (await fetch(`/posts/${t.postId}/like`)).json();
+      let o = await (await fetch(`/posts/${t.postId}/like/`)).json();
       n.value = o.likes, i.value = o.user_likes;
     }
     return (r, o) => (Ki(), rf("div", jE, [
