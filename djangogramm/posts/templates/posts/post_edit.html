@@ -24,7 +24,7 @@
             {% if image.image %}
               <img src="{{ image.image.url }}" alt="Image" style="max-width: 600px; height: auto;">
             {% endif %}
-            <button type="submit" name="delete_image" value="{{ image.id }}" class="btn btn-delete">Delete</button>
+            <button type="submit" name="delete_image" value="{{ image.id }}" class="btn btn-danger">Delete</button>
           </div>
         {% endfor %}
       </div>
