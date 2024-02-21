@@ -7,7 +7,7 @@
       <p><a href="{% url 'edit_post' post.id %}" class="btn btn-primary">Edit post</a> </p>
     {% endif %}
   
-    <p>posted by <b><a href="{% url 'user_info' post.user.id %}">{{ post.user.first_name }}</a></b> on {{ post.created_at }}</p>
+    <p>posted by <b><a href="{% url 'user_info' post.user.id %}">{{ post.user.username }}</a></b> on {{ post.created_at }}</p>
   
     <p>{{ post.description }}</p>
 
