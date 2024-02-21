@@ -18,7 +18,11 @@
           <a href="{% url 'detail_post' post.id %}" class="post-link-details">
             {% for image in post.image_set.all %}
               {% if image.image %}
-                <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+                {% if image.preview %}
+                  <img src="{{ image.preview.url }}" alt="{{ post.title }}" class="post-image">
+                {% else %}
+                  <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+                {% endif %}
               {% endif %}
             {% endfor %}
 
@@ -26,9 +30,9 @@
             <p class="post-description">{{ post.description }}</p>
           </a>
 
-        <div id="like-{{ post.id }}" >
-          <like post-id="{{ post.id }}"></like>
-        </div>
+          <div id="like-{{ post.id }}">
+            <like post-id="{{ post.id }}"></like>
+          </div>
 
         </li>
       {% empty %}

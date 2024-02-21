@@ -1,5 +1,8 @@
 from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.shortcuts import redirect
+from PIL import Image as PilImage
+import io
 
 from icecream import ic
 
@@ -9,7 +12,14 @@ from users.models import Subscription
 
 def add_images(post: Post, files):
     for file in files.getlist('image'):
-        Image.objects.create(post=post, image=file)
+        img_instance = Image.objects.create(post=post, image=file)
+        preview_img = PilImage.open(img_instance.image)
+        preview_img.thumbnail((300, 10_000))
+        thumb_io = io.BytesIO()
+        preview_img.save(thumb_io, 'JPEG', quality=60)
+        preview_name = f"{img_instance.image.name}".split('/')[-1]
+        img_instance.preview.save(preview_name, ContentFile(thumb_io.getvalue()), save=False)
+        img_instance.save()
 
 
 def delete_image(request, post):
@@ -17,6 +27,7 @@ def delete_image(request, post):
     images = Image.objects.filter(id=image_id)
     for img in images:
         img.image.delete()
+        img.preview.delete()
         img.delete()
     return redirect('edit_post', post.id)
 

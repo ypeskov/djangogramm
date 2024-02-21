@@ -1,5 +1,6 @@
 ####### Development stage ######
-FROM python:3.12-bullseye as dev
+#FROM python:3.12-bullseye as dev
+FROM python:3.12.2-bookworm as dev
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -19,7 +20,8 @@ EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 ###### Production stage ######
-FROM python:3.12.1-slim-bullseye as prod
+#FROM python:3.12.1-slim-bullseye as prod
+FROM python:3.12.2-slim-bookworm as prod
 
 WORKDIR /app
 
