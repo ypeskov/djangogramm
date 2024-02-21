@@ -10,7 +10,7 @@ COPY ../requirements.txt /app/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install debugpy
+#RUN pip install debugpy
 
 COPY ./djangogramm/ /app
 
