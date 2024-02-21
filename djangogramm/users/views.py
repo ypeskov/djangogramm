@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
@@ -12,6 +13,7 @@ from django.utils import timezone
 from django.contrib.auth import login
 from django.views import View
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 from icecream import ic
 
@@ -104,22 +106,30 @@ class UserInfoView(View):
 
 
 @require_GET
+@login_required
 def follow_user(request, user_id):
     follower_user = request.user
     following_user = User.objects.get(id=user_id)
-    if follower_user == following_user:
-        messages.error(request, 'You cannot follow yourself.')
-        return redirect(reverse('user_info', args=[user_id]))
-
-    # if user is already following then unfollow and vice versa
     try:
         subscription = Subscription.objects.get(follower=follower_user, following=following_user)
         subscription.delete()
-    except ObjectDoesNotExist as e:
-        subscription = Subscription(follower=follower_user, following=following_user)
-        subscription.save()
-    except Exception as e:
-        messages.error(request, 'Something went wrong. Please try again.')
-        return redirect(reverse('user_info', args=[user_id]))
+        is_following = False
+    except ObjectDoesNotExist:
+        Subscription.objects.create(follower=follower_user, following=following_user)
+        is_following = True
 
-    return redirect(reverse('user_info', args=[user_id]))
+    return JsonResponse({'is_following': is_following, })
+
+
+@require_GET
+@login_required
+def get_user_info(request, user_id):
+    user = User.objects.get(id=user_id)
+    is_following = False
+    try:
+        Subscription.objects.get(follower=request.user, following=user)
+        is_following = True
+    except ObjectDoesNotExist:
+        is_following = False
+
+    return JsonResponse({'is_following': is_following})
