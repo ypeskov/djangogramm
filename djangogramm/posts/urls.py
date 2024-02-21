@@ -1,5 +1,5 @@
 from django.urls import path
-from posts.views import PostEditView, TagAddView, detail_post, PostListView, like_post
+from posts.views import PostEditView, TagAddView, detail_post, PostListView, like_post, get_likes
 
 urlpatterns = [
     path('', PostListView.as_view(), name='post_feed'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('new/', PostEditView.as_view(), name='new_post'),
     path('tag/add/', TagAddView.as_view(), name='add_tag'),
     path('show/<int:post_id>/', detail_post, name='detail_post'),
-    path('post/<int:post_id>/like/', like_post, name='like_post'),
+    path('<int:post_id>/like/', like_post, name='like_post'),
+    path('<int:post_id>/get-likes/', get_likes, name='get_likes'),
 ]

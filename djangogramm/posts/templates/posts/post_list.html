@@ -18,17 +18,21 @@
           <a href="{% url 'detail_post' post.id %}" class="post-link-details">
             {% for image in post.image_set.all %}
               {% if image.image %}
-                <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+                {% if image.preview %}
+                  <img src="{{ image.preview.url }}" alt="{{ post.title }}" class="post-image">
+                {% else %}
+                  <img src="{{ image.image.url }}" alt="{{ post.title }}" class="post-image">
+                {% endif %}
               {% endif %}
             {% endfor %}
 
             <p class="post-date">{{ post.created_at }}</p>
             <p class="post-description">{{ post.description }}</p>
           </a>
-        <div class="mb-3">
-          <span>{{ post.like_set.count }}</span>
-          <a href="{% url 'like_post' post.id %}" class="btn btn-info">👍</a>
-        </div>
+
+          <div id="like-{{ post.id }}">
+            <like post-id="{{ post.id }}"></like>
+          </div>
 
         </li>
       {% empty %}
