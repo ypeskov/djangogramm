@@ -133,3 +133,25 @@ def get_user_info(request, user_id):
         is_following = False
 
     return JsonResponse({'is_following': is_following})
+
+
+def get_username_as_email(details, *args, **kwargs):
+    """Set the username to the user's email."""
+    email = details.get('email')
+    if email:
+        return {'username': email}
+    else:
+        raise ValueError('Email is required for username')
+
+
+def populate_user_profile(details, user=None, *args, **kwargs):
+    """Create a user if it doesn't exist."""
+    if user:
+        return {'is_new': False, 'user': user}
+    email = details.get('email')
+    if email:
+        user, created = User.objects.get_or_create(email=email, defaults={'username': email})
+        return {
+            'is_new': created,
+            'user': user
+        }

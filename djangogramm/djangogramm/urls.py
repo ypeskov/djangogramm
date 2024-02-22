@@ -27,6 +27,7 @@ urlpatterns = [
     path("posts/", include("posts.urls")),
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
+    path('social/', include('social_django.urls', namespace='social'))
 ]
 
 if settings.DEBUG:
