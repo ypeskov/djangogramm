@@ -5,7 +5,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <div class="form-container">
+  <div class="form-container mb-3">
     <h2>Login</h2>
     {% if form.non_field_errors %}
       <div class="messages">
@@ -29,5 +29,8 @@
       {% endfor %}
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
+    <div class="mt-3">
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-success">Login with Google</a>
+    </div>
   </div>
 {% endblock %}

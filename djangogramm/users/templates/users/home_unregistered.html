@@ -10,6 +10,7 @@
     <div class="auth-links">
       <a href="{% url 'login' %}" class="btn btn-primary">Log in</a>
       <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-success">Login/Register with Google</a>
     </div>
   </div>
 {% endblock %}

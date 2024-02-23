@@ -1,7 +1,10 @@
+import pytest
 from django.urls import reverse
 from icecream import ic
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
+from social_django.utils import load_strategy, load_backend
+from social_core.backends.oauth import BaseOAuth2
 
 from registration.models import ActivationLink
 from registration.services import register_user
@@ -99,3 +102,24 @@ def test_user_profile_update_view(client, create_user):
     assert response.status_code == 302
     assert response.url == reverse('profile')
 
+
+@pytest.mark.django_db
+def test_social_auth_mock(mocker):
+    email = 'test@example.com'
+    user = User.objects.create_user(username=email, email=email, password='testpass', is_active=True, first_name='Test',
+                                    last_name='User')
+
+    mocker.patch.object(BaseOAuth2, 'auth_complete', return_value=user)
+
+    strategy = load_strategy()
+    backend = load_backend(strategy=strategy, name='google-oauth2', redirect_uri='/')
+
+    authenticated_user = backend.complete(user=None, request=None)
+
+    assert authenticated_user == user
+    assert User.objects.filter(email=email).exists()
+    assert User.objects.get(email=email).is_active
+    assert User.objects.get(email=email).is_authenticated
+    assert User.objects.get(email=email).first_name == 'Test'
+    assert User.objects.get(email=email).last_name == 'User'
+    assert User.objects.get(email=email).username == email
