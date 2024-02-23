@@ -54,7 +54,7 @@ def activate_view(request, link_hash):
         UserProfile.objects.get_or_create(user=user)
 
         activation_link.delete()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
         messages.success(request, 'Congratulations! Your account is activated.')
 
